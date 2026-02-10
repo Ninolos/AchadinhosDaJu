@@ -362,7 +362,7 @@ a{ color: inherit; }
 
 .grid{
   display:grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(1, 1fr);
   gap: 14px;
 }
 
@@ -381,7 +381,7 @@ a{ color: inherit; }
 }
 
 .thumb{
-  height: 132px;
+  height: 250px;
   background:
     radial-gradient(circle at 20% 30%, rgba(255,173,173,.50), transparent 45%),
     radial-gradient(circle at 75% 25%, rgba(202,255,191,.55), transparent 48%),
@@ -586,6 +586,58 @@ a{ color: inherit; }
   filter: saturate(1.05);
 }
 
+.thumbImg{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* =========================
+   Centralizar botão quando houver apenas 1 loja
+========================= */
+
+/* Quando cardActions tiver apenas 1 botão */
+.cardActions:has(> a:only-child) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 96px; /* ajusta a altura visual */
+}
+
+/* Remove espaçamento exagerado do botão único */
+.cardActions:has(> a:only-child) .btnSmall {
+  margin-top: 6px;
+}
+
+.pagination{
+  display:flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.pagination .pageBtn{
+  padding: 10px 12px;
+  border-radius: 14px;
+  border: 1px solid rgba(43,43,43,.10);
+  background: rgba(255,255,255,.85);
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 10px 22px rgba(0,0,0,.06);
+}
+
+.pagination .pageBtn[disabled]{
+  opacity: .5;
+  cursor: not-allowed;
+}
+
+.pagination .pageInfo{
+  font-weight: 900;
+  color: rgba(43,43,43,.75);
+}
+
 /* ===== Mobile UX ===== */
 @media (max-width: 480px){
   .heroCtas{ flex-direction: column; }
@@ -609,7 +661,7 @@ a{ color: inherit; }
   .heroRight{ min-height: 340px; }
 
   .grid{
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .footerInner{

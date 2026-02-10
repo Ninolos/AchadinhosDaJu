@@ -143,98 +143,12 @@
     <section class="section" id="produtos" aria-label="Produtos em destaque">
       <div class="sectionHead">
         <div>
-          <h3>Produtos em destaque</h3>
-          <p>3 produtos de teste — substitua pelos seus links reais.</p>
+          <h3>Produtos em destaque</h3>         
         </div>
       </div>
 
-      <div class="grid">
-
-        <!-- Produto 1 -->
-        <article class="card">
-          <div class="thumb" role="img" aria-label="Imagem ilustrativa do produto"></div>
-          <div class="cardBody">
-            <div class="tagRow">
-              <span class="tag hot">Promo</span>
-              <span class="tag ml">Mercado Livre</span>
-            </div>
-
-            <h4>Organizador de Geladeira (Teste)</h4>
-            <p>Perfeito pra deixar tudo visível e ganhar espaço. Clique e vá direto para o app/loja.</p>
-
-            <div class="cardActions">
-              <a class="btnSmall btnML"
-                 href="./r/organizador-geladeira-ml.html"
-                 data-product-name="Organizador de Geladeira"
-                 data-product-store="ML"
-                 data-product-path="./r/organizador-geladeira-ml.html">
-                 <img src="./assets/svg/ml.svg"
-                    alt="Mercado Livre"
-                    class="storeIcon">
-
-                Comprar no Mercado Livre
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Produto 2 -->
-        <article class="card">
-          <div class="thumb" role="img" aria-label="Imagem ilustrativa do produto"></div>
-          <div class="cardBody">
-            <div class="tagRow">
-              <span class="tag">Casa</span>
-              <span class="tag sp">Shopee</span>
-            </div>
-
-            <h4>Fita LED com Sensor (Teste)</h4>
-            <p>Boa pra corredor/armário. Redireciona direto para a Shopee.</p>
-
-            <div class="cardActions">
-              <a class="btnSmall btnSP"
-                 href="./r/fita-led-sensor-sp.html"
-                 data-product-name="Fita LED com Sensor"
-                 data-product-store="Shopee"
-                 data-product-path="./r/fita-led-sensor-sp.html">
-                 <img src="./assets/svg/shopee.svg"
-                      alt="Shopee"
-                      class="storeIcon">
-
-                  Comprar na Shopee
-              </a>
-            </div>
-          </div>
-        </article>
-
-        <!-- Produto 3 -->
-        <article class="card">
-          <div class="thumb" role="img" aria-label="Imagem ilustrativa do produto"></div>
-          <div class="cardBody">
-            <div class="tagRow">
-              <span class="tag">Cozinha</span>
-              <span class="tag ml">Mercado Livre</span>
-            </div>
-
-            <h4>Escorredor Dobrável (Teste)</h4>
-            <p>Compacto e prático. Clique e vá direto para a loja.</p>
-
-            <div class="cardActions">
-              <a class="btnSmall btnML"
-                 href="./r/escorredor-dobravel-ml.html"
-                 data-product-name="Escorredor Dobrável"
-                 data-product-store="ML"
-                 data-product-path="./r/escorredor-dobravel-ml.html">
-                <img src="./assets/svg/ml.svg"
-                    alt="Mercado Livre"
-                    class="storeIcon">
-
-                Comprar no Mercado Livre
-              </a>
-            </div>
-          </div>
-        </article>
-
-      </div>
+        <div class="grid" id="productsGrid" aria-live="polite"></div>        
+        <div id="pagination" class="pagination"></div>
 
       <div class="note" id="avisos">
         <strong>Aviso:</strong> preços e disponibilidade são de responsabilidade das lojas. Links podem conter comissão de afiliado.       
