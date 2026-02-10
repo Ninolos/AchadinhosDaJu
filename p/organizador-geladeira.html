@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Organizador de Geladeira | Achadinhos da Ju</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#FBF5EA">
+
+  <!-- usa o mesmo CSS do site -->
+  <link rel="stylesheet" href="../assets/css/style.css">
+
+  <style>
+    /* só para essa página (simples e compatível com seu layout) */
+    .productWrap{
+      max-width: 680px;
+      margin: 0 auto;
+      text-align: center;
+      padding-top: 36px;
+    }
+
+    .productImg{
+      width: 100%;
+      max-width: 360px;
+      aspect-ratio: 1 / 1;
+      object-fit: cover;
+      border-radius: 22px;
+      margin: 18px auto 14px;
+      border: 1px solid rgba(43,43,43,.10);
+      box-shadow: 0 14px 30px rgba(0,0,0,.10);
+      background: rgba(255,255,255,.65);
+    }
+
+    .countdownBox{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(43,43,43,.10);
+      background: rgba(255,255,255,.75);
+      box-shadow: 0 10px 22px rgba(0,0,0,.06);
+      margin: 10px 0 14px;
+      font-weight: 900;
+      font-size: 13px;
+      color: rgba(43,43,43,.80);
+    }
+
+    .countNum{
+      min-width: 22px;
+      display: inline-block;
+    }
+
+    .smallMuted{
+      color: rgba(43,43,43,.65);
+      font-size: 13px;
+      line-height: 1.55;
+      margin: 0 0 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <main class="wrap">
+    <section class="productWrap">
+
+      <a class="brandLink" href="../index.html" aria-label="Voltar para a página inicial" style="justify-content:center; min-width: unset;">
+        <img class="logoImg" src="../assets/img/logo.png" alt="Achadinhos da Ju" />
+        <div class="brandText">
+          <h1 style="margin:0">Achadinhos da Ju</h1>
+          <p style="margin:4px 0 0">Utilidades • Casa • Promoções rápidas</p>
+        </div>
+      </a>
+
+      <h2 class="heroTitle" style="margin-top:18px; font-size:28px;">Organizador de Geladeira</h2>
+
+      <!-- ✅ IMAGEM DO PRODUTO (troque o src) -->
+      <img
+        class="productImg"
+        src="../assets/img/produtos/organizador-geladeira.jpg"
+        alt="Organizador de Geladeira"
+        loading="eager"
+      />
+
+      <p class="smallMuted">
+        Mais organização, melhor aproveitamento de espaço e fácil limpeza.
+      </p>
+
+      <!-- ✅ CONTADOR -->
+      <div class="countdownBox" aria-live="polite">
+        Redirecionando em <span class="countNum" id="count">3</span>s…
+      </div>
+
+      <!-- ✅ BOTÃO MANUAL (fallback) -->
+      <a
+        id="cta"
+        class="btn btnPrimary"
+        href="https://www.mercadolivre.com.br/SEU-LINK-AFILIADO"
+      >
+        Abrir no Mercado Livre agora
+      </a>
+
+      <p class="note" style="margin-top:18px">
+        Este link pode conter comissão de afiliado. Preço e disponibilidade são responsabilidade da loja.
+      </p>
+
+    </section>
+  </main>
+
+  <script>
+    // ⏱️ Tempo total do redirecionamento (em segundos)
+    let seconds = 3;
+
+    const countEl = document.getElementById('count');
+    const ctaEl = document.getElementById('cta');
+
+    // Atualiza número imediatamente
+    countEl.textContent = seconds;
+
+    const timer = setInterval(() => {
+      seconds--;
+      countEl.textContent = seconds;
+
+      if (seconds <= 0) {
+        clearInterval(timer);
+        window.location.href = ctaEl.href;
+      }
+    }, 1000);
+  </script>
+</body>
+</html>
