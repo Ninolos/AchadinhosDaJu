@@ -529,6 +529,57 @@ a{ color: inherit; }
 }
 .mutedLink:hover{ text-decoration: underline; }
 
+
+/* =========================
+   Ícones das lojas
+========================= */
+
+.storeIcon{
+  width: 30px;
+  height: 30px;
+  margin-right: 8px;
+  flex-shrink: 0;
+  opacity: .9;
+}
+
+/* =========================
+   Botão Mercado Livre
+========================= */
+
+.btnML{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(253, 255, 182, .85); /* amarelo pastel */
+  color: #5c4b00;
+  border-color: rgba(253, 255, 182, .9);
+}
+
+.btnML:hover{
+  background: rgba(253, 255, 182, .95);
+  filter: saturate(1.05);
+}
+
+/* =========================
+   Botão Shopee
+========================= */
+
+.btnSP{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 214, 165, .85); /* pêssego pastel */
+  color: #6b3a00;
+  border-color: rgba(255, 214, 165, .9);
+}
+
+.btnSP:hover{
+  background: rgba(255, 214, 165, .95);
+  filter: saturate(1.05);
+}
+
 /* ===== Mobile UX ===== */
 @media (max-width: 480px){
   .heroCtas{ flex-direction: column; }
