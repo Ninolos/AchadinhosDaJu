@@ -173,10 +173,105 @@ function renderProductCard(p) {
   `;
 }
 
+function getDayKey() {
+  // dia no fuso do usuário (suficiente para seu caso)
+  const d = new Date();
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+
+function hashToIndex(str, max) {
+  // hash simples e estável
+  let h = 0;
+  for (let i = 0; i < str.length; i++) {
+    h = (h * 31 + str.charCodeAt(i)) >>> 0;
+  }
+  return max ? (h % max) : 0;
+}
+
+function renderStoreButton(storeKey, storeLabel, redirectUrl) {
+  const isML = storeKey === "ml";
+  const storeClass = isML ? "btnML" : "btnSP";
+
+  // ajuste conforme sua pasta real:
+  const icon = isML ? "./assets/svg/ml.svg" : "./assets/svg/shopee.svg";
+  const text = isML ? "Comprar no Mercado Livre" : "Comprar na Shopee";
+
+  return `
+    <a class="btnSmall ${storeClass}"
+       href="${escapeHtml(redirectUrl || "#")}"
+       data-product-name="${escapeHtml(storeLabel || "")}"
+       data-product-store="${isML ? "Mercado Livre" : "Shopee"}">
+      <img class="storeIcon" src="${icon}" alt="${escapeHtml(storeLabel || "")}">
+      ${text}
+    </a>
+  `;
+}
+
+async function loadDailyProduct() {
+  const nameEl = document.getElementById("dailyName");
+  const descEl = document.getElementById("dailyDesc");
+  const imgEl  = document.getElementById("dailyImg");
+  const actionsEl = document.getElementById("dailyActions");
+  if (!nameEl || !descEl || !imgEl || !actionsEl) return;
+
+  try {
+    const res = await fetch("./assets/data/produtos.json", { cache: "no-store" });
+    if (!res.ok) throw new Error("Falha ao carregar produtos.json");
+
+    const products = await res.json();
+    if (!Array.isArray(products) || products.length === 0) return;
+
+    // ✅ escolhe 1 produto fixo por dia (determinístico)
+    const dayKey = getDayKey();
+    const idx = hashToIndex(dayKey, products.length);
+    const p = products[idx];
+
+    nameEl.textContent = p.title || "Produto do dia";
+    descEl.textContent = p.description || "Confira a oferta selecionada de hoje.";
+
+    // imagem
+    if (p.imageUrl) {
+      imgEl.style.backgroundImage = `url('${p.imageUrl}')`;
+    } else {
+      imgEl.style.backgroundImage = ""; // mantém o visual padrão
+    }
+
+    // botões (suporta p.stores ou o modelo antigo)
+    const stores = Array.isArray(p.stores) && p.stores.length
+      ? p.stores
+      : [{
+          store: p.store,
+          storeLabel: p.storeLabel,
+          redirectUrl: p.redirectUrl
+        }];
+
+    const buttonsHtml = stores
+      .filter(s => s && s.redirectUrl)
+      .slice(0, 2) // no máximo 2 botões
+      .map(s => renderStoreButton((s.store || "").toLowerCase(), s.storeLabel, s.redirectUrl))
+      .join("");
+
+    actionsEl.innerHTML = buttonsHtml || "";
+
+    // (opcional) evento no GA quando renderiza o produto do dia
+    if (typeof gtag === "function") {
+      gtag("event", "daily_product_show", {
+        product_name: p.title || "",
+        day: dayKey
+      });
+    }
+
+  } catch (err) {
+    console.error("Daily product error:", err);
+  }
+}
+
+
 
 // chama ao carregar
 document.addEventListener("DOMContentLoaded", () => {
   loadProducts();
+  loadDailyProduct();
 
   const year = document.getElementById("year");
   if (year) year.textContent = new Date().getFullYear();

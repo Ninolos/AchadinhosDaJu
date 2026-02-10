@@ -638,6 +638,12 @@ a{ color: inherit; }
   color: rgba(43,43,43,.75);
 }
 
+#dailyImg{
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
 /* ===== Mobile UX ===== */
 @media (max-width: 480px){
   .heroCtas{ flex-direction: column; }

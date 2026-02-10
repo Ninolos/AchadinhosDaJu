@@ -58,21 +58,5 @@
         "redirectUrl": "./p/organizador-geladeira.html"
       }
     ]
-  },
-  {
-    "id": "ptes-acrilico",
-    "title": "Kit 4 Potes Acrílico 3,8l Organizador Geladeira Rebirth",
-    "description": "Organizador de Geladeira 3,8 Litros Cesto Com Tampa Multiuso Alimentos Verduras e Vegetais",
-    "category": "Casa",
-    "badge": "Promo",
-    "imageUrl": "../assets/img/potes-acrilico.webp",
-    "stores": [
-      {
-        "store": "ml",
-        "storeLabel": "Mercado Livre",
-        "redirectUrl": "./p/organizador-geladeira.html"
-      }
-    ]
   }
-
 ]

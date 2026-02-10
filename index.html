@@ -113,8 +113,7 @@
             </div>
           </div>
         </div>
-
-        <div class="heroRight" aria-hidden="true">
+        <div class="heroRight" aria-hidden="false">
           <div class="heroCard">
             <div class="heroCardTop">
               <div class="pill green">Entrega rápida</div>
@@ -122,17 +121,21 @@
             </div>
 
             <div class="heroCardMain">
-              <div class="fakeImg"></div>
+              <div class="fakeImg" id="dailyImg" aria-hidden="true"></div>
               <div class="heroCardText">
                 <b>Promoção do dia</b>
-                <span>Nome do Produto</span>
+                <span id="dailyName">Nome do Produto</span>
               </div>
             </div>
 
-            <p class="heroCardDesc">Descrição do produto (resumo curto) para destacar um item especial do dia.</p>
+            <p class="heroCardDesc" id="dailyDesc">
+              Descrição do produto (resumo curto) para destacar um item especial do dia.
+            </p>
+
+            <!-- ✅ botões do produto do dia -->
+            <div class="cardActions" id="dailyActions" style="margin-top:12px"></div>
           </div>
         </div>
-      </div>
 
     </div>
   </section>
