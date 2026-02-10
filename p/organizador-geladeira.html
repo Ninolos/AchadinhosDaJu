@@ -7,11 +7,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#FBF5EA">
 
-  <!-- usa o mesmo CSS do site -->
   <link rel="stylesheet" href="../assets/css/style.css">
 
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XXXXXXXXXX', { anonymize_ip: true });
+  </script>
+
   <style>
-    /* só para essa página (simples e compatível com seu layout) */
     .productWrap{
       max-width: 680px;
       margin: 0 auto;
@@ -75,7 +82,6 @@
 
       <h2 class="heroTitle" style="margin-top:18px; font-size:28px;">Organizador de Geladeira</h2>
 
-      <!-- ✅ IMAGEM DO PRODUTO (troque o src) -->
       <img
         class="productImg"
         src="../assets/img/produtos/organizador-geladeira.jpg"
@@ -87,12 +93,10 @@
         Mais organização, melhor aproveitamento de espaço e fácil limpeza.
       </p>
 
-      <!-- ✅ CONTADOR -->
       <div class="countdownBox" aria-live="polite">
         Redirecionando em <span class="countNum" id="count">3</span>s…
       </div>
 
-      <!-- ✅ BOTÃO MANUAL (fallback) -->
       <a
         id="cta"
         class="btn btnPrimary"
@@ -115,16 +119,45 @@
     const countEl = document.getElementById('count');
     const ctaEl = document.getElementById('cta');
 
+    // label pra identificar o produto no GA
+    const productLabel = 'organizador-geladeira';
+
+    function trackOutbound(type) {
+      // type: 'manual_click' | 'auto_redirect'
+      try {
+        gtag('event', type, {
+          event_category: 'affiliate',
+          event_label: productLabel,
+          transport_type: 'beacon'
+        });
+      } catch (e) {
+        // se GA não carregar por algum motivo, segue o fluxo normal
+      }
+    }
+
+    // clique manual (fallback)
+    ctaEl.addEventListener('click', () => {
+      trackOutbound('manual_click');
+    });
+
     // Atualiza número imediatamente
     countEl.textContent = seconds;
 
+    // ✅ contador real (1s)
     const timer = setInterval(() => {
       seconds--;
       countEl.textContent = seconds;
 
       if (seconds <= 0) {
         clearInterval(timer);
-        window.location.href = ctaEl.href;
+
+        // marca evento de redirect automático
+        trackOutbound('auto_redirect');
+
+        // dá um "respiro" mínimo pro beacon sair (não atrapalha o UX)
+        setTimeout(() => {
+          window.location.href = ctaEl.href;
+        }, 120);
       }
     }, 1000);
   </script>
