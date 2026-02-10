@@ -263,7 +263,7 @@ a{ color: inherit; }
   border-radius: 22px;
   box-shadow: var(--shadow);
   padding: 14px;
-  margin-top: 80px; 
+  margin-top: 40px; 
 }
 
 .heroCardTop{
@@ -591,7 +591,7 @@ a{ color: inherit; }
   .heroCtas{ flex-direction: column; }
   .btn{ width: 100%; }
 
-  .heroCard{ padding: 12px; margin-top: 80px; }
+  .heroCard{ padding: 12px; margin-top: 40px; }
   .fakeImg{ width:72px; height:72px; }
 }
 
