@@ -1,0 +1,25 @@
+{
+    "id": "colchao-inflavel",
+    "title": "Colchão Inflável Casal Com Inflador Acoplado Camping Mor",
+    "description": "O Colchão Inflável Casal Mor é produzido em PVC resistente...",
+    "category": "Casa",
+    "badge": "Promo",
+    "imageUrl": "../assets/img/colchao-inflavel.webp",
+    "stores": [
+          {
+            "store": "ml",
+            "storeLabel": "Mercado Livre",
+            "affiliateUrl": "https://mercadolivre.com/sec/2BRKJk3"
+          },
+          {
+            "store": "sp",
+            "storeLabel": "Shopee",
+            "affiliateUrl": "https://shope.ee/SEU_LINK_AQUI"
+          },
+          {
+            "store": "amz",
+            "storeLabel": "Amazon",
+            "affiliateUrl": "https://www.amazon.com.br/dp/XXXX?tag=SEUTAG-20"
+          }
+        ]
+  }
