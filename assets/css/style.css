@@ -15,7 +15,7 @@
   --muted2: rgba(43,43,43,.55);
   --border: rgba(43,43,43,.10);
 
-  --max: 980px;
+  --max: 1200px;
   --radius: 20px;
   --shadow: 0 14px 34px rgba(0,0,0,.10);
   
@@ -342,7 +342,7 @@ a{ color: inherit; }
 }
 
 /* ===== Seção Produtos ===== */
-.section{ margin-top: 18px; }
+
 
 .sectionHead{
   display:flex;
