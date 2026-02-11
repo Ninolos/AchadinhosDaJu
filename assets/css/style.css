@@ -24,7 +24,7 @@
 }
 
 html {
-  color-scheme: light;
+  color-scheme: light; 
 }
 
 *{ box-sizing: border-box; }
@@ -144,7 +144,7 @@ a{ color: inherit; }
   align-items:center;
   justify-content: space-between;
   gap: 12px;
-  padding: 10px 0 18px;
+  padding: 15px 20px;
 }
 
 .brandLink{
@@ -167,7 +167,7 @@ a{ color: inherit; }
 
 .brandText h1{
   margin:0;
-  font-size: 18px;
+  font-size: 25px;
   font-weight: 900;
 }
 .brandText p{
@@ -182,7 +182,7 @@ a{ color: inherit; }
   gap: 18px;
   align-items:center;
   justify-content:center;
-  flex: 1;
+  flex: 0.4;
 }
 .navLink{
   text-decoration:none;
@@ -200,7 +200,9 @@ a{ color: inherit; }
   padding: 10px 0 24px;
 }
 
-.heroLeft{ padding: 8px 0; }
+.heroLeft{
+  text-align: center;
+}
 
 .heroTitle{
   margin: 14px 0 8px;
@@ -210,14 +212,14 @@ a{ color: inherit; }
 }
 
 .heroText{
-  margin:0;
-  color: rgba(43,43,43,.72);
-  font-size: 14px;
-  line-height: 1.65;
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 56ch; /* opcional: deixa a leitura mais bonita no desktop */
 }
 
 .heroCtas{
   display:flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
   margin-top: 14px;
@@ -277,7 +279,8 @@ a{ color: inherit; }
 }
 
 .socialTitle{
-  display:block;
+  display:flex;
+  justify-content: center;
   font-weight: 900;
   font-size: 14px;
   margin-bottom: 10px;
@@ -286,6 +289,7 @@ a{ color: inherit; }
 
 .socialButtons{
   display:flex;
+  justify-content: center;
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -327,7 +331,7 @@ a{ color: inherit; }
   border: 1px solid rgba(43,43,43,.08);
 }
 
-.heroCardText b{ display:block; font-size: 14px; }
+.heroCardText b{ display:block; font-size: 18px; }
 .heroCardText span{ display:block; font-size: 12.5px; color: var(--muted); margin-top: 4px; }
 
 .heroCardDesc{
@@ -362,7 +366,7 @@ a{ color: inherit; }
 
 .grid{
   display:grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns:  1fr;
   gap: 14px;
 }
 
@@ -646,8 +650,14 @@ a{ color: inherit; }
 
 /* ===== Mobile UX ===== */
 @media (max-width: 480px){
-  .heroCtas{ flex-direction: column; }
-  .btn{ width: 100%; }
+  .heroCtas{ justify-content: center; }
+   .heroCtas .btn{
+    width: auto;            /* não 100% */
+    min-width: 280px;       /* deixa “cara” de CTA */
+    padding: 16px 22px;     /* maior que o mobile */
+    font-size: 16px;
+    border-radius: 18px;
+  }
 
   .heroCard{ padding: 12px; margin-top: 40px; }
   .fakeImg{ width:72px; height:72px; }
@@ -665,6 +675,13 @@ a{ color: inherit; }
 
   .heroTitle{ font-size: 38px; }
   .heroRight{ min-height: 340px; }
+
+  .heroCtas .btnPrimary{
+    width: 100%;
+    max-width: 350px;   /* controla o “tamanho elegante” */
+    padding: 16px 18px; /* deixa mais “botão principal” */
+    font-size: 16px;
+  }
 
   .grid{
     grid-template-columns: repeat(4, 1fr);
