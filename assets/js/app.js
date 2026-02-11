@@ -49,43 +49,75 @@
 async function loadProducts() {
   const grid = document.getElementById("productsGrid");
   const pager = document.getElementById("pagination");
+  const searchInput = document.getElementById("searchInput");
   if (!grid) return;
 
   const pageSize = 20;
   let currentPage = 1;
   let products = [];
+  let filtered = [];
+
+  function normalize(str) {
+    return String(str || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "");
+  }
+
+  function applyFilter() {
+    const q = normalize(searchInput?.value || "");
+
+    if (!q) {
+      filtered = products.slice();
+    } else {
+      filtered = products.filter(p => {
+        const name = normalize(p.title);
+        return name.includes(q);
+        // Se quiser buscar também na descrição/categoria:
+        // return name.includes(q) || normalize(p.description).includes(q) || normalize(p.category).includes(q);
+      });
+    }
+
+    currentPage = 1;
+    renderPage();
+  }
+
+  function renderPage() {
+    const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+    currentPage = Math.min(Math.max(1, currentPage), totalPages);
+
+    const start = (currentPage - 1) * pageSize;
+    const pageItems = filtered.slice(start, start + pageSize);
+
+    grid.innerHTML = pageItems.map(renderProductCard).join("");
+
+    if (pager) {
+      pager.innerHTML = `
+        <button class="pageBtn" id="prevPage" ${currentPage === 1 ? "disabled" : ""}>Anterior</button>
+        <span class="pageInfo">Página ${currentPage} de ${totalPages}</span>
+        <button class="pageBtn" id="nextPage" ${currentPage === totalPages ? "disabled" : ""}>Próxima</button>
+      `;
+
+      const prev = document.getElementById("prevPage");
+      const next = document.getElementById("nextPage");
+
+      if (prev) prev.onclick = () => { currentPage--; renderPage(); smoothScrollTo(grid.offsetTop - 20, 900); };
+      if (next) next.onclick = () => { currentPage++; renderPage(); smoothScrollTo(grid.offsetTop - 20, 900); };
+    }
+  }
 
   try {
     const res = await fetch("./assets/data/produtos.json", { cache: "no-store" });
     if (!res.ok) throw new Error("Não foi possível carregar products.json");
 
     products = await res.json();
-
-    function renderPage() {
-      const totalPages = Math.max(1, Math.ceil(products.length / pageSize));
-      currentPage = Math.min(Math.max(1, currentPage), totalPages);
-
-      const start = (currentPage - 1) * pageSize;
-      const pageItems = products.slice(start, start + pageSize);
-
-      grid.innerHTML = pageItems.map(renderProductCard).join("");
-
-      if (pager) {
-        pager.innerHTML = `
-          <button class="pageBtn" id="prevPage" ${currentPage === 1 ? "disabled" : ""}>Anterior</button>
-          <span class="pageInfo">Página ${currentPage} de ${totalPages}</span>
-          <button class="pageBtn" id="nextPage" ${currentPage === totalPages ? "disabled" : ""}>Próxima</button>
-        `;
-
-        const prev = document.getElementById("prevPage");
-        const next = document.getElementById("nextPage");
-
-        if (prev) prev.onclick = () => { currentPage--; renderPage(); window.scrollTo({ top: grid.offsetTop - 20, behavior: "smooth" }); };
-        if (next) next.onclick = () => { currentPage++; renderPage(); window.scrollTo({ top: grid.offsetTop - 20, behavior: "smooth" }); };
-      }
-    }
+    filtered = products.slice();
 
     renderPage();
+
+    if (searchInput) {
+      searchInput.addEventListener("input", applyFilter);
+    }
 
   } catch (err) {
     console.error(err);
@@ -96,6 +128,7 @@ async function loadProducts() {
     if (pager) pager.innerHTML = "";
   }
 }
+
 
 
 function escapeHtml(str) {

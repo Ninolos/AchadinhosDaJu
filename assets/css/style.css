@@ -648,6 +648,39 @@ a{ color: inherit; }
   background-repeat: no-repeat;
 }
 
+.sectionHeadRow{
+  display:flex;
+  flex-direction: column;  /* ✅ mobile: embaixo do título */
+  gap: 10px;
+}
+
+.searchInput{
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 16px;
+  border: 1px solid rgba(43,43,43,.10);
+  background: rgba(255,255,255,.85);
+  box-shadow: 0 10px 22px rgba(0,0,0,.06);
+  font-weight: 800;
+  font-size: 14px;
+  outline: none;
+  color: rgba(43,43,43,.85);
+}
+
+.searchInput::placeholder{
+  color: rgba(43,43,43,.45); /* mais claro e delicado */
+  font-weight: 700;
+}
+
+/* Safari / iOS */
+.searchInput::-webkit-input-placeholder{
+  color: rgba(43,43,43,.45);
+}
+
+.searchInput:focus{
+  border-color: rgba(43,43,43,.22);
+}
+
 /* ===== Mobile UX ===== */
 @media (max-width: 480px){
   .heroCtas{ justify-content: center; }
@@ -661,6 +694,10 @@ a{ color: inherit; }
 
   .heroCard{ padding: 12px; margin-top: 40px; }
   .fakeImg{ width:72px; height:72px; }
+
+   .socialButtons{
+    flex-direction: column;
+  }
 }
 
 /* ===== Desktop layout ===== */
@@ -691,11 +728,17 @@ a{ color: inherit; }
     flex-direction: row; 
     align-items: center;
   }
-}
 
-@media (max-width: 480px){
-  .socialButtons{
-    flex-direction: column;
+   .sectionHeadRow{
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .sectionHeadRight{
+    min-width: 320px;
+    max-width: 380px;
+    width: 100%;
   }
 }
 
