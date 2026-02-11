@@ -140,49 +140,89 @@ function escapeHtml(str) {
     .replaceAll("'", "&#039;");
 }
 
+function getStoreMeta(storeKey) {
+  const key = String(storeKey || "").toLowerCase();
+
+  if (key === "ml") {
+    return {
+      key: "ml",
+      label: "Mercado Livre",
+      btnClass: "btnML",
+      icon: "./assets/svg/ml.svg",
+      text: "Comprar no Mercado Livre"
+    };
+  }
+
+  if (key === "sp") {
+    return {
+      key: "sp",
+      label: "Shopee",
+      btnClass: "btnSP",
+      icon: "./assets/svg/shopee.svg",
+      text: "Comprar na Shopee"
+    };
+  }
+
+  if (key === "amz") {
+    return {
+      key: "amz",
+      label: "Amazon",
+      btnClass: "btnAMZ", // crie esse no CSS
+      icon: "./assets/svg/amazon.svg",
+      text: "Comprar na Amazon"
+    };
+  }
+
+  // fallback
+  return {
+    key,
+    label: "Loja",
+    btnClass: "btnML",
+    icon: "./assets/svg/ml.svg",
+    text: "Comprar"
+  };
+}
+
+function renderStoreButton(storeKey, storeLabel, productId) {
+  const meta = getStoreMeta(storeKey);
+
+  const label = escapeHtml(storeLabel || meta.label);
+  const redirectUrl = `./p/produto.html?id=${encodeURIComponent(productId)}&store=${encodeURIComponent(meta.key)}`;
+
+  return `
+    <a class="btnSmall ${meta.btnClass}"
+       href="${redirectUrl}"
+       data-product-id="${escapeHtml(productId)}"
+       data-product-name="${escapeHtml(storeLabel || "")}"
+       data-product-store="${label}">
+      <img class="storeIcon" src="${meta.icon}" alt="${label}">
+      ${meta.text}
+    </a>
+  `;
+}
+
 function renderProductCard(p) {
   const title = escapeHtml(p.title);
   const desc = escapeHtml(p.description);
   const category = escapeHtml(p.category || "");
   const badge = escapeHtml(p.badge || "");
 
-  // thumb: se tiver imageUrl usa imagem; se não, usa o gradient atual
   const thumbStyle = p.imageUrl
     ? `style="background-image:url('${escapeHtml(p.imageUrl)}')"`
     : "";
 
-  // ✅ Suporta p.stores (array) OU o modelo antigo p.store/p.redirectUrl
-  const stores = Array.isArray(p.stores) && p.stores.length
-    ? p.stores
-    : [{
-        store: p.store,
-        storeLabel: p.storeLabel,
-        redirectUrl: p.redirectUrl
-      }];
+  // ✅ usa sempre p.stores
+  const stores = Array.isArray(p.stores) ? p.stores : [];
 
-  const actionsHtml = stores.map(s => {
-    const storeKey = (s.store || "").toLowerCase(); // 'ml' ou 'sp'
-    const isML = storeKey === "ml";
+  // ✅ ordena na ordem: ML, Shopee, Amazon (se existir)
+  const order = { ml: 1, sp: 2, amz: 3 };
+  const storesSorted = stores
+    .filter(s => s && s.store && s.affiliateUrl) // só as válidas
+    .sort((a, b) => (order[(a.store || "").toLowerCase()] || 99) - (order[(b.store || "").toLowerCase()] || 99));
 
-    const storeClass = isML ? "btnML" : "btnSP";
-
-    // ✅ Ajuste aqui o caminho real do svg:
-    const storeIcon = isML ? "./assets/svg/ml.svg" : "./assets/svg/shopee.svg";
-
-    const storeLabel = escapeHtml(s.storeLabel || (isML ? "Mercado Livre" : "Shopee"));
-    const redirectUrl = escapeHtml(s.redirectUrl || "#");
-    const storeText = isML ? "Comprar no Mercado Livre" : "Comprar na Shopee";
-
-    return `
-      <a class="btnSmall ${storeClass}"
-         href="${redirectUrl}"
-         data-product-id="${escapeHtml(p.id)}"
-         data-product-name="${title}"
-         data-product-store="${storeLabel}">
-        <img class="storeIcon" src="${storeIcon}" alt="${storeLabel}">
-        ${storeText}
-      </a>
-    `;
+  const actionsHtml = storesSorted.map(s => {
+    const storeKey = (s.store || "").toLowerCase();
+    return renderStoreButton(storeKey, s.storeLabel, p.id);
   }).join("");
 
   return `
@@ -206,6 +246,7 @@ function renderProductCard(p) {
   `;
 }
 
+
 function getDayKey() {
   // dia no fuso do usuário (suficiente para seu caso)
   const d = new Date();
@@ -221,24 +262,7 @@ function hashToIndex(str, max) {
   return max ? (h % max) : 0;
 }
 
-function renderStoreButton(storeKey, storeLabel, redirectUrl) {
-  const isML = storeKey === "ml";
-  const storeClass = isML ? "btnML" : "btnSP";
 
-  // ajuste conforme sua pasta real:
-  const icon = isML ? "./assets/svg/ml.svg" : "./assets/svg/shopee.svg";
-  const text = isML ? "Comprar no Mercado Livre" : "Comprar na Shopee";
-
-  return `
-    <a class="btnSmall ${storeClass}"
-       href="${escapeHtml(redirectUrl || "#")}"
-       data-product-name="${escapeHtml(storeLabel || "")}"
-       data-product-store="${isML ? "Mercado Livre" : "Shopee"}">
-      <img class="storeIcon" src="${icon}" alt="${escapeHtml(storeLabel || "")}">
-      ${text}
-    </a>
-  `;
-}
 
 async function loadDailyProduct() {
   const nameEl = document.getElementById("dailyName");
@@ -278,10 +302,14 @@ async function loadDailyProduct() {
           redirectUrl: p.redirectUrl
         }];
 
-    const buttonsHtml = stores
-      .filter(s => s && s.redirectUrl)
-      .slice(0, 2) // no máximo 2 botões
-      .map(s => renderStoreButton((s.store || "").toLowerCase(), s.storeLabel, s.redirectUrl))
+    const storesArr = Array.isArray(p.stores) ? p.stores : [];
+
+    const order = { ml: 1, sp: 2, amz: 3 };
+    const buttonsHtml = storesArr
+      .filter(s => s && s.store && s.affiliateUrl)
+      .sort((a, b) => (order[(a.store || "").toLowerCase()] || 99) - (order[(b.store || "").toLowerCase()] || 99))
+      .slice(0, 3) // pode mostrar os 3
+      .map(s => renderStoreButton((s.store || "").toLowerCase(), s.storeLabel, p.id))
       .join("");
 
     actionsEl.innerHTML = buttonsHtml || "";

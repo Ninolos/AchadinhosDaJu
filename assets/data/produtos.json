@@ -10,29 +10,39 @@
       {
         "store": "ml",
         "storeLabel": "Mercado Livre",
-        "redirectUrl": "./p/organizador-geladeira.html"
+        "affiliateUrl": "https://mercadolivre.com/sec/22beUgL"
       }
     ]
   },
   {
     "id": "colchao-inflavel",
     "title": "Colchão Inflável Casal Com Inflador Acoplado Camping Mor",
-    "description": "O Colchão Inflável Casal Mor é produzido em PVC resistente em toda a sua estrutura, conta com um revestimento aveludado na parte superior que torna sua superfície extremamente confortável",
+    "description": "O Colchão Inflável Casal Mor é produzido em PVC resistente...",
     "category": "Casa",
     "badge": "Promo",
     "imageUrl": "../assets/img/colchao-inflavel.webp",
     "stores": [
-      {
-        "store": "ml",
-        "storeLabel": "Mercado Livre",
-        "redirectUrl": "./p/colchao-inflavel.html"
-      }
-    ]
+          {
+            "store": "ml",
+            "storeLabel": "Mercado Livre",
+            "affiliateUrl": "https://mercadolivre.com/sec/2BRKJk3"
+          },
+          {
+            "store": "sp",
+            "storeLabel": "Shopee",
+            "affiliateUrl": "https://shope.ee/SEU_LINK_AQUI"
+          },
+          {
+            "store": "amz",
+            "storeLabel": "Amazon",
+            "affiliateUrl": "https://www.amazon.com.br/dp/XXXX?tag=SEUTAG-20"
+          }
+        ]
   },
   {
     "id": "camera-lampada-seguranca",
     "title": "Câmera Lampada De segurança Casenn",
-    "description": "Uma única câmera consegue cobrir uma área muito maior do que uma câmera comum. Você pode girar a imagem através do celular e controlar o zoom. É possível acender a luz remotamente.",
+    "description": "Uma única câmera consegue cobrir uma área muito maior...",
     "category": "Casa",
     "badge": "Promo",
     "imageUrl": "../assets/img/camera-seguranca.webp",
@@ -40,14 +50,14 @@
       {
         "store": "ml",
         "storeLabel": "Mercado Livre",
-        "redirectUrl": "./p/camera-lampada-seguranca.html"
+        "affiliateUrl": "https://mercadolivre.com/sec/1f8BYXS"
       }
     ]
   },
   {
     "id": "sacos-vacuo",
-    "title": "Pack Sacos A Vácuo Kit 10 Unidades Com Bomba Reutilizável ",
-    "description": "O Pack 10 Sacos a Vácuo Magnow é a solução ideal para quem deseja maximizar espaço e manter roupas e acessórios organizados. ",
+    "title": "Pack Sacos A Vácuo Kit 10 Unidades Com Bomba Reutilizável",
+    "description": "O Pack 10 Sacos a Vácuo Magnow é a solução ideal...",
     "category": "Casa",
     "badge": "Promo",
     "imageUrl": "../assets/img/sacos-vacuo.webp",
@@ -55,7 +65,7 @@
       {
         "store": "ml",
         "storeLabel": "Mercado Livre",
-        "redirectUrl": "./p/sacos-vacuo.html"
+        "affiliateUrl": "https://mercadolivre.com/sec/1XNxUCV"
       }
     ]
   }

@@ -497,6 +497,10 @@ a{ color: inherit; }
   background: rgba(202,255,191,.75);
 }
 
+.btnAMZ{
+  background: rgba(255, 255, 255, 0.75);
+}
+
 .note{
   margin-top: 14px;
   padding: 14px;
@@ -587,6 +591,21 @@ a{ color: inherit; }
 
 .btnSP:hover{
   background: rgba(255, 214, 165, .95);
+  filter: saturate(1.05);
+}
+
+.btnAMZ{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.85); /* pêssego pastel */
+  color: #6b3a00;
+  border-color: rgba(255, 255, 255, 0.9);
+}
+
+.btnAMZ:hover{
+  background: rgba(211, 211, 211, 0.95);
   filter: saturate(1.05);
 }
 
@@ -776,3 +795,53 @@ a{ color: inherit; }
       0 2px 0 rgba(255,173,173,.45) inset;
   }
 }
+
+/* =========================
+   Desktop: centralizar verticalmente os botões na área branca do card
+   (sem mexer no mobile)
+========================= */
+@media (min-width: 860px){
+
+  /* Card vira coluna para permitir "esticar" o body */
+  .card{
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Thumb mantém a altura fixa e não encolhe */
+  .thumb{
+    flex: 0 0 auto;
+  }
+
+  /* Body ocupa o resto da altura do card */
+  .cardBody{
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* A área de ações vira o "bloco branco" que cresce e centraliza */
+  .cardActions{
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;   /* botões um embaixo do outro */
+    justify-content: center;  /* ✅ centraliza vertical */
+    align-items: stretch;     /* botões 100% largura */
+    gap: 10px;
+    margin-top: 14px;         /* mantém respiro do texto */
+    flex-wrap: nowrap;        /* garante coluna no desktop */
+  }
+
+  /* Desativa o comportamento especial do :has() no desktop,
+     porque agora o alinhamento é sempre centralizado */
+  .cardActions:has(> a:only-child){
+    min-height: unset;
+    justify-content: center;
+    align-items: stretch;
+  }
+
+  .cardActions:has(> a:only-child) .btnSmall{
+    margin-top: 0;
+  }
+}
+
